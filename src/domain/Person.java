@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -17,6 +18,8 @@ public class Person {
 	private String firstName;
 	private String lastName;
 	private Role role;
+	private String status;
+	private List<Person> friends;
 
 	public Person(String userId, String password, String firstName,
 			String lastName,Role role) {
@@ -25,10 +28,32 @@ public class Person {
 		setFirstName(firstName);
 		setLastName(lastName);
 		setRole(role);
+		setStatus("Offline");
+		setFriends(new ArrayList<Person>());
+	}
+
+	public List<Person> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<Person> friends) {
+		this.friends = friends;
+	}
+
+	public String getStatus() {
+		if (status != null) {
+			return status;
+		} else {
+			return "Offline";
+		}
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	public Person(String userId, String password, String salt,
-			String firstName, String lastName,Role role) {
+				  String firstName, String lastName, Role role) {
 		setUserId(userId);
 		setPassword(password);
 		setSalt(salt);
@@ -149,4 +174,9 @@ public class Person {
 		this.lastName = lastName;
 	}
 
+	public void addFriend(Person p) {
+		if (p != null) {
+			friends.add(p);
+		}
+	}
 }

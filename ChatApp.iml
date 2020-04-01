@@ -19,7 +19,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.4" level="application_server_libraries" />
-    <orderEntry type="library" name="jstl-1.2" level="project" />
+    <orderEntry type="library" name="gson-2.8.6" level="project" />
+    <orderEntry type="library" name="jackson-annotations-2.0.1" level="project" />
+    <orderEntry type="library" name="taglibs-standard-jstlel-1.2.5" level="project" />
+    <orderEntry type="library" name="taglibs-standard-impl-1.2.5" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="javaee-api-7.0" level="project" />
   </component>
 </module>
