@@ -45,7 +45,7 @@ public class LogIn extends RequestHandler {
 			request.setAttribute("errors", errors);
 		}
 
-		request.getRequestDispatcher(destination).forward(request, response);
+		response.sendRedirect("Controller?action=Home");
 	}
 	
 	private void createSession(Person person, HttpServletRequest request,

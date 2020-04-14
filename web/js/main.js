@@ -58,6 +58,7 @@ function getFriends() {
 
 function showFriends() {
     console.log("showing friends");
+
     if (friendRequest.status === 200){
         if (friendRequest.readyState === 4){
             clearTable();
@@ -69,8 +70,25 @@ function showFriends() {
                 tdname.innerText = text[person].name;
                 let tdstatus = document.createElement('td');
                 tdstatus.innerText = text[person].statusname;
+                let tdform = document.createElement('td');
+
+                let form = document.createElement("form");
+                form.id = "chatform";
+                form.method = "POST";
+                let chatbtn = document.createElement("input");
+                chatbtn.type = "button";
+                chatbtn.value = "Chat now";
+                chatbtn.onclick = getData;
+                function getData() {
+                    let name = tdname.innerText;
+                    console.log(name);
+                    openForm(name);
+                }
+                form.appendChild(chatbtn);
+                tdform.appendChild(form);
                 tr.appendChild(tdname);
                 tr.appendChild(tdstatus);
+                tr.appendChild(tdform);
                 tr.className = 'friendlist';
                 table.appendChild(tr);
             }
@@ -151,5 +169,58 @@ function writeResponse(text){
     console.log(split);
     document.getElementById("comments" + split[0]).innerHTML += "<br/>" + split[1];
 
+}
+
+
+// JQUERY AJAX - Chatting
+// document.getElementById("chatform").addEventListener('submit', (e => {
+//     e.preventDefault();
+//     let message = document.getElementById("msg").value;
+//     let nick = document.getElementById("currentuser").innerHTML;
+//     $.ajax({
+//         type: "POST",
+//         url: "Controller?action=privateChat",
+//         data: {'message': message, 'nick': nick},
+//         dataType: "json",
+//         success: function () {
+//             $('#chatbox').append(nick + ": " + message);
+//         },
+//         error: function () {
+//             alert("An error occured");
+//
+//         }
+//     });
+// }));
+
+// $(document).ready(function () {
+//     $("#chatsubmit").click(function () {
+//         $nick = document.getElementById("currentuser").value;
+//         $message = document.getElementById("msg").value;
+//         $.ajax({
+//             type: "POST",
+//             url: "Controller?action=privatechat",
+//             data: {"nick": $nick, "message": $message},
+//             success: function () {
+//                 console.log("worked");
+//             },
+//             error: function () {
+//                 console.log("error");
+//
+//             },
+//             dataType: "json"
+//         })
+//
+//     });
+//
+// });
+
+
+function openForm(name) {
+    document.getElementById("chatname").innerHTML = name;
+    document.getElementById("chatdiv").style.display = "block";
+}
+
+function closeForm() {
+    document.getElementById("chatdiv").style.display = "none";
 }
 
