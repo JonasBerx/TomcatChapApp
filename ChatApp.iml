@@ -25,5 +25,6 @@
     <orderEntry type="library" name="taglibs-standard-impl-1.2.5" level="project" />
     <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="library" name="javaee-api-7.0" level="project" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>

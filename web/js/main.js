@@ -78,12 +78,13 @@ function showFriends() {
                 let chatbtn = document.createElement("input");
                 chatbtn.type = "button";
                 chatbtn.value = "Chat now";
-                chatbtn.onclick = getData;
-                function getData() {
+                chatbtn.onclick = function () {
                     let name = tdname.innerText;
                     console.log(name);
-                    openForm(name);
-                }
+                    document.getElementById("chatRecipient").innerHTML = name;
+                    openForm();
+                };
+
                 form.appendChild(chatbtn);
                 tdform.appendChild(form);
                 tr.appendChild(tdname);
@@ -172,55 +173,122 @@ function writeResponse(text){
 }
 
 
-// JQUERY AJAX - Chatting
-// document.getElementById("chatform").addEventListener('submit', (e => {
-//     e.preventDefault();
-//     let message = document.getElementById("msg").value;
-//     let nick = document.getElementById("currentuser").innerHTML;
-//     $.ajax({
-//         type: "POST",
-//         url: "Controller?action=privateChat",
-//         data: {'message': message, 'nick': nick},
-//         dataType: "json",
-//         success: function () {
-//             $('#chatbox').append(nick + ": " + message);
-//         },
-//         error: function () {
-//             alert("An error occured");
-//
-//         }
-//     });
-// }));
+// JQUERY AJAX -
+let chatwindow = false;
+let $currentUser = document.getElementById("currentuser").innerText;
+console.log($currentUser);
+let $recipient = $currentUser.toLowerCase()+"@ucll.be";
+// $(window).on('load', getMessages());
 
-// $(document).ready(function () {
-//     $("#chatsubmit").click(function () {
-//         $nick = document.getElementById("currentuser").value;
-//         $message = document.getElementById("msg").value;
-//         $.ajax({
-//             type: "POST",
-//             url: "Controller?action=privatechat",
-//             data: {"nick": $nick, "message": $message},
-//             success: function () {
-//                 console.log("worked");
-//             },
-//             error: function () {
-//                 console.log("error");
-//
-//             },
-//             dataType: "json"
-//         })
-//
-//     });
-//
-// });
+let $message = $('#chatbox');
 
 
-function openForm(name) {
-    document.getElementById("chatname").innerHTML = name;
-    document.getElementById("chatdiv").style.display = "block";
+function getMessages() {
+    $.ajax({
+        type: "GET",
+        url: "Controller?action=GetMessages",
+        async: true,
+        success: function (text) {
+            getData(text);
+        },
+        error: function () {
+            console.log("error in get");
+
+        }
+    });
+}
+function getData(text) {
+    var t;
+    console.log("getData");
+    //TODO fix messages showing up at correct persons
+        // let jsonResponse = JSON.parse(messageXhr.responseText);
+        // let $senderIdStuff = $('#sessionStuff').text();
+        // let $recipient = $recipient.val();
+        // $message.empty();
+        // for (let message in jsonResponse) {
+        //     if ((jsonResponse[message].recipientId === $senderIdStuff || $senderIdStuff === jsonResponse[message].senderId) &&
+        //         (jsonResponse[message].recipientId === $recipient || jsonResponse[message].senderId === $recipient)) {
+        //         let messageLine = document.createElement('p');
+        //         let sender = document.createTextNode(jsonResponse[message].sender +": ");
+        //         let messageLineText = document.createTextNode(jsonResponse[message].message);
+        //         messageLine.appendChild(sender);
+        //         messageLine.appendChild(messageLineText);
+        //         $message.append(messageLine);
+        //     }
+
+    let response = JSON.parse(text);
+    // alert(response);
+    let $senderIdStuff = $currentUser.toLowerCase() + "@ucll.be";
+    $message.empty();
+    for (let message in response) {
+        console.log("In for loop");
+        console.log(response[message].recipientId+ $senderIdStuff);
+        console.log($senderIdStuff + response[message].senderId);
+        console.log(response[message].recipientId + $recipient+"@ucll.be");
+        console.log(response[message].senderId + $recipient+"@ucll.be");
+
+
+        if ((response[message].recipientId === $senderIdStuff || $senderIdStuff === response[message].senderId) && (response[message].recipientId === $recipient.toLowerCase()+"@ucll.be" || response[message].senderId === $recipient.toLowerCase()+"@ucll.be")) {
+
+            // let messageLine = document.createElement('div');
+            // let sender = document.createTextNode(response[message].sender + ": ");
+            // let messageLineText = document.createTextNode(response[message].message);
+            // messageLine.appendChild(sender);
+            // messageLine.appendChild(messageLineText);
+            // $message.append(messageLine + "<br/>");
+
+            $message.append(response[message].sender + ": "+ response[message].message+"<br/>")
+
+            console.log(response[message].sender + ": "+ response[message].message+"<br/>")
+        }
+
+    }
+        console.log(chatwindow);
+        t = setInterval(getMessages,10000);
+
+    if (chatwindow === false) {
+        console.log("cleared interval");
+        clearInterval(t);
+    }
 }
 
+function openForm() {
+    chatwindow = true;
+    document.getElementById("chatdiv").style.display = "block";
+    $recipient = $('#chatRecipient').html();
+    getMessages();
+    $('#chatsubmit').on('click', sendMessage);
+    document.getElementById("chatsubmit").addEventListener("onclick", sendMessage);
+
+    console.log("openform recipient" + $recipient);
+}
+function sendMessage() {
+    let $text = $('#msg').val();
+    let $recipientId = $recipient;
+
+    console.log($text);
+    console.log("Recipientid in sendmessage" + $recipientId);
+
+    $.ajax({
+        type: "POST",
+        url: "Controller?action=Message",
+        data: {"message": $text, "recipient": $recipientId.toLowerCase()+"@ucll.be"},
+        async: true,
+        dataType: "json",
+        success: function () {
+            getMessages();
+            $('#chatbox').append($currentUser + ": " + $text+"<br/>");
+            document.getElementById("msg").value = "";
+        },
+        error: function () {
+            console.log($recipientId);
+            console.log($text);
+            console.log("error in send");
+        }
+    });
+}
 function closeForm() {
     document.getElementById("chatdiv").style.display = "none";
+    chatwindow = false;
 }
 

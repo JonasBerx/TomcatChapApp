@@ -1,5 +1,6 @@
 package controller;
 
+import domain.MessageService;
 import domain.PersonService;
 
 import javax.servlet.RequestDispatcher;
@@ -24,6 +25,7 @@ public class Controller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private PersonService model = new PersonService();
+	private MessageService messageModel = new MessageService();
 	private ControllerFactory controllerFactory = new ControllerFactory();
 
 	public Controller() {
@@ -47,7 +49,7 @@ public class Controller extends HttpServlet {
 		if (action != null) {
 
 			try {
-				controllerFactory.getController(action, model).handleRequest(request, response);
+				controllerFactory.getController(action, model,messageModel).handleRequest(request, response);
 			} catch (NotAuthorizedException exc) {
 				List<String> errors = new ArrayList<String>();
 				errors.add(exc.getMessage());
@@ -57,7 +59,7 @@ public class Controller extends HttpServlet {
 				view.forward(request, response);
 			}
 		} else {
-			controllerFactory.getController(action, model).handleRequest(request, response);
+			controllerFactory.getController(action, model, messageModel).handleRequest(request, response);
 			destination = "index.jsp";
 			RequestDispatcher view = request.getRequestDispatcher(destination);
 			view.forward(request, response);

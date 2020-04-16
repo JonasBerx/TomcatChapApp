@@ -8,7 +8,7 @@
 <jsp:include page="head.jsp">
     <jsp:param name="title" value="Home"/>
 </jsp:include>
-<body>
+<body id="body">
 <jsp:include page="header.jsp">
     <jsp:param name="title" value="Home"/>
 </jsp:include>
@@ -36,7 +36,8 @@
             <form id="chatform" method="post" class="form-container">
                 <h1>Chat</h1>
                 <div id="chatbox"></div>
-                <label  for="msg"><b id="chatname"></b></label>
+                <div id="chatRecipient"></div>
+                <label  for="msg"></label>
                 <textarea placeholder="Type message.." id="msg" name="msg" required></textarea>
 
                 <button id="chatsubmit" type="button" class="btn">Send</button>
@@ -147,32 +148,32 @@
     <jsp:param name="title" value="Home"/>
 </jsp:include>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript">
+</script>
 <script src="js/main.js"></script>
-<script src="js/jquery-1.11.0.js"></script>
-<script src="js/jquery-3.3.1.min.js"></script>
 <script>
-    $(document).ready(function () {
-        $("#chatsubmit").click(function () {
-            let $nick = document.getElementById("currentuser").innerHTML;
-            let $message = document.getElementById("msg").value;
-            $.ajax({
-                type: "POST",
-                url: "Controller?action=privateChat",
-                data: {"nick": $nick, "message": $message},
-                success: function () {
-                    $('#chatbox').append($nick + ": " + $message);
-                },
-                error: function () {
-                    console.log($nick);
-                    console.log("error");
-
-                },
-                dataType: "json"
-            })
-
-        });
-
-    });
+    // $(document).ready(function () {
+    //     $("#chatsubmit").click(function () {
+    //         let $nick = document.getElementById("currentuser").innerHTML;
+    //         let $message = document.getElementById("msg").value;
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "Controller?action=privateChat",
+    //             data: {"nick": $nick, "message": $message},
+    //             success: function () {
+    //                 $('#chatbox').append($nick + ": " + $message+"<br/>");
+    //             },
+    //             error: function () {
+    //                 console.log($nick);
+    //                 console.log("error");
+    //
+    //             },
+    //             dataType: "json"
+    //         })
+    //
+    //     });
+    //
+    // });
 </script>
 </body>
 </html>

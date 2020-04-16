@@ -22,11 +22,13 @@ public class PersonRepositoryStub implements PersonRepository {
 		jan.addFriend(an);
 	}
 	
-	public Person get(String personId){
-		if(personId == null){
+	public Person get(String userId){
+		System.out.println("personrepostub get" + userId);
+
+		if(userId == null){
 			throw new IllegalArgumentException("No id given");
 		}
-		return persons.get(personId);
+		return persons.get(userId);
 	}
 	
 	public List<Person> getAll(){
