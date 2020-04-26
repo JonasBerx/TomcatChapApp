@@ -298,7 +298,7 @@ document.getElementById('bgform').addEventListener('submit', (ev => {
 
     console.log(color);
 
-    $.ajax({
+    $.post({
         url: "Controller?action=Change",
         data: {"color": color},
         async: true,
