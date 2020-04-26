@@ -292,3 +292,19 @@ function closeForm() {
     chatwindow = false;
 }
 
+document.getElementById('bgform').addEventListener('submit', (ev => {
+    ev.preventDefault();
+    let color = document.getElementById("colorChooser").value;
+
+    console.log(color);
+
+    $.ajax({
+        url: "Controller?action=Change",
+        data: {"color": color},
+        async: true,
+        success : function () {
+            document.body.style.backgroundColor = color.toString();
+        }
+    })
+}));
+

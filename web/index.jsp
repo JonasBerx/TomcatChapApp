@@ -31,6 +31,11 @@
             </p>
         </form>
         <br/>
+        <form id="bgform">
+            <input type="color" id="colorChooser" value="#456456">
+            <label for="colorChooser">Color</label>
+            <button type="submit">Change Background</button>
+        </form>
 
         <div class="chat-popup" id="chatdiv" style="border: 1px black">
             <form id="chatform" method="post" class="form-container">
@@ -151,29 +156,5 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js" type="text/javascript">
 </script>
 <script src="js/main.js"></script>
-<script>
-    // $(document).ready(function () {
-    //     $("#chatsubmit").click(function () {
-    //         let $nick = document.getElementById("currentuser").innerHTML;
-    //         let $message = document.getElementById("msg").value;
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "Controller?action=privateChat",
-    //             data: {"nick": $nick, "message": $message},
-    //             success: function () {
-    //                 $('#chatbox').append($nick + ": " + $message+"<br/>");
-    //             },
-    //             error: function () {
-    //                 console.log($nick);
-    //                 console.log("error");
-    //
-    //             },
-    //             dataType: "json"
-    //         })
-    //
-    //     });
-    //
-    // });
-</script>
 </body>
 </html>
