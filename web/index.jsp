@@ -67,7 +67,7 @@
         </table>
         <br/>
         <form id="addFriend">
-            <label for="friendName"></label>
+            <label for="friendName">Email</label>
             <input type="text" id="friendName">
             <button id="friendsubmit" type="submit">Add Friend</button>
         </form>

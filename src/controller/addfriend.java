@@ -16,7 +16,7 @@ public class addfriend extends RequestHandler {
         System.out.println(person.getFirstName());
         System.out.println(request.getParameter("name"));
 
-        Person pp = getPersonService().getPerson(request.getParameter("name") + "@ucll.be");
+        Person pp = getPersonService().getPerson(request.getParameter("name"));
         System.out.println(pp.getFirstName());
         System.out.println(pp.getUserId());
 
