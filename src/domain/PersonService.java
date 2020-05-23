@@ -12,7 +12,6 @@ public class PersonService {
 	}
 	
 	public Person getPerson(String personId)  {
-		System.out.println("Getperson in person service" + personId);
 
 		return getPersonRepository().get(personId);
 	}

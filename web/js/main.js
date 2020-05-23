@@ -1,6 +1,7 @@
 let statusRequest = new XMLHttpRequest();
 let commentRequest = new XMLHttpRequest();
 let friendRequest = new XMLHttpRequest();
+let getstatusrequest = new XMLHttpRequest();
 let timeoutid;
 
 var webSocket = new WebSocket("ws://localhost:8080/comment");
@@ -11,6 +12,7 @@ webSocket.onmessage = function (ev) {
 
 
 getFriends();
+getStatus();
 // Personal status - AJAX Part 1 //
 
 document.getElementById('statusForm').addEventListener('submit', (e) => {
@@ -25,6 +27,7 @@ document.getElementById('statusForm').addEventListener('submit', (e) => {
     console.log(statusRequest.responseText);
     document.getElementById('statusInput').value = '';
     getFriends();
+
 });
 
 
@@ -38,6 +41,23 @@ document.getElementById("addFriend").addEventListener('submit', (e => {
     addFriend(username);
 
 }));
+
+function getStatus() {
+    getstatusrequest.open("GET", "Controller?action=GetStatus", true);
+    getstatusrequest.onreadystatechange = showStatus;
+    getstatusrequest.send(null);
+
+}
+
+function showStatus() {
+    if (getstatusrequest.status === 200){
+        if (getstatusrequest.readyState === 4){
+            console.log(getstatusrequest.responseText);
+            document.getElementById('status').innerText = getstatusrequest.responseText;
+        }
+    }
+    setTimeout(getStatus,10000);
+}
 
 function addFriend(username) {
     console.log(username);

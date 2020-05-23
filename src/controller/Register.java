@@ -29,12 +29,12 @@ public class Register extends RequestHandler {
         if (passTest == null || passTest.isEmpty()) {
             errors.add("Fill in the control");
         }
+        int age = Integer.parseInt(request.getParameter("age"));
         String address = request.getParameter("address");
         if (address == null || address.isEmpty()) {
             errors.add("No address given");
         }
         String sex = request.getParameter("sex");
-        System.out.println(sex);
 
         if (sex == null || sex.isEmpty()) {
             errors.add("No sex given");
@@ -50,10 +50,8 @@ public class Register extends RequestHandler {
         if (errors.size() == 0) {
             if (passTest.equals(passHash)) {
                 try {
-                    Person person = new Person(email, passHash, fname, lname, Role.LID);
+                    Person person = new Person(email, passHash, fname, lname, Role.LID,sex, age);
                     getPersonService().addPerson(person);
-
-
                 } catch (DomainException d) {
                     errors.add(d.getMessage());
                 }

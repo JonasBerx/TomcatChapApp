@@ -19,10 +19,12 @@ public class Person {
 	private String lastName;
 	private Role role;
 	private String status;
+	private int age;
+	private String sex;
 	private List<Person> friends;
 
 	public Person(String userId, String password, String firstName,
-			String lastName,Role role) {
+			String lastName,Role role, String sex,int age) {
 		setUserId(userId);
 		setHashedPassword(password);
 		setFirstName(firstName);
@@ -30,6 +32,15 @@ public class Person {
 		setRole(role);
 		setStatus("Offline");
 		setFriends(new ArrayList<Person>());
+		setAge(age);
+		setSex(sex);
+	}
+
+	private void setAge(int age) {
+		this.age = age;
+	}
+	private void setSex(String sex) {
+		this.sex = sex;
 	}
 
 	public List<Person> getFriends() {
@@ -178,5 +189,13 @@ public class Person {
 		if (p != null) {
 			friends.add(p);
 		}
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public int getAge() {
+		return age;
 	}
 }
